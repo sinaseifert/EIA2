@@ -1,8 +1,8 @@
 var Memorie;
 (function (Memorie) {
     /*Variablen erstellen*/
-    var numPlayer = 1;
-    var numPairs = 5;
+    var numPlayer = 0;
+    var numPairs = 0;
     /*Array*/
     var cardContent = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
     var cardArray = [];
@@ -73,33 +73,39 @@ var Memorie;
     function main() {
         console.log("main");
         /* numPlayers erstellen */
-        numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
-        if (numPlayer < 1 || numPlayer > 4) {
-            numPlayer = 1;
+        var i = true;
+        while (i) {
+            numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
+            if (numPlayer >= 1 && numPlayer <= 4) {
+                i = false;
+            }
         }
-        for (var i = 0; i < numPlayer; i++) {
-            player[i] = prompt("Bitte Spielernamen " + (i + 1) + " eingeben");
-            if (player[i] == null) {
-                player[i] = "Mickey";
+        for (var i_1 = 0; i_1 < numPlayer; i_1++) {
+            player[i_1] = prompt("Bitte Spielernamen " + (i_1 + 1) + " eingeben");
+            if (player[i_1] == null) {
+                player[i_1] = "Mickey";
             }
         }
         /* numPairs erstellen */
-        numPairs = parseInt(prompt("Bitte wählen Sie zwischen 5 und 15 Kartenpaaren"), 10);
-        if (numPairs < 5 || numPairs > 15) {
-            numPairs = 5;
+        i = true;
+        while (i) {
+            numPairs = parseInt(prompt("Bitte wählen Sie zwischen 5 und 15 Kartenpaaren"), 10);
+            if (numPairs >= 5 && numPairs <= 15) {
+                i = false;
+            }
         }
         /* Schleife für Kartenpaare */
-        for (var i = 0; i < numPairs; i++) {
+        for (var i_2 = 0; i_2 < numPairs; i_2++) {
             /* cardContent 2x an cardArray [] anf�gen */
-            cardArray.push(cardContent[i]);
-            cardArray.push(cardContent[i]);
+            cardArray.push(cardContent[i_2]);
+            cardArray.push(cardContent[i_2]);
         }
         /* Spielboard erzeugen */
         createBoard();
         /* Spielerinfo erzeugen */
         playerInfo();
     }
-    // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
+    // Add EventListener - Main() wird ausgeführt, sobald das DOM vollst�ndig geladen ist
     document.addEventListener("DOMContentLoaded", main);
 })(Memorie || (Memorie = {}));
 //# sourceMappingURL=Aufgabe2.js.map

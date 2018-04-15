@@ -1,7 +1,7 @@
 namespace Memorie {
     /*Variablen erstellen*/
-    let numPlayer: number = 1;
-    let numPairs: number = 5;
+    let numPlayer: number = 0;
+    let numPairs: number = 0;
 
     /*Array*/
     let cardContent: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
@@ -81,9 +81,12 @@ namespace Memorie {
     function main(): void {
         console.log("main");
         /* numPlayers erstellen */
-        numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
-        if (numPlayer < 1 || numPlayer > 4) {
-            numPlayer = 1;
+        let i: boolean = true;
+        while (i) {
+            numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
+            if (numPlayer >= 1 && numPlayer <= 4) {
+                i = false;
+            }
         }
 
         for (let i: number = 0; i < numPlayer; i++) {
@@ -94,9 +97,12 @@ namespace Memorie {
         }
 
         /* numPairs erstellen */
-        numPairs = parseInt(prompt("Bitte wählen Sie zwischen 5 und 15 Kartenpaaren"), 10);
-        if (numPairs < 5 || numPairs > 15) {
-            numPairs = 5;
+        i = true;
+        while (i) {
+            numPairs = parseInt(prompt("Bitte wählen Sie zwischen 5 und 15 Kartenpaaren"), 10);
+            if (numPairs >= 5 && numPairs <= 15) {
+                i = false;
+            }
         }
 
         /* Schleife für Kartenpaare */
@@ -112,6 +118,6 @@ namespace Memorie {
         /* Spielerinfo erzeugen */
         playerInfo();
     }
-    // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
+    // Add EventListener - Main() wird ausgeführt, sobald das DOM vollst�ndig geladen ist
     document.addEventListener("DOMContentLoaded", main);
 }
