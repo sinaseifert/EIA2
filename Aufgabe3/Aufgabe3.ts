@@ -20,26 +20,21 @@ namespace Memorie {
     let player: string[] = [];
     let score: number = 0;
 
-    /*Array, dass nur zwei Stellen speichert*/
-//    let visibleCards : string [] =       
-    window.addEventListener("click", changeStatus);
-
     function changeStatus(_event: Event): void {
         let target: HTMLDivElement = <HTMLDivElement>_event.target;
-        if (counter == 0) { 
+        counter++;
+        if (counter < 2) {
             document.getElementById(target.id).classList.remove("hidden");
             card1class = target.className;
             card1id = target.id;
             document.getElementById(target.id).classList.add("visible");
-
-            counter++;
-        } else if (counter == 1) {
+        }else if (counter == 2) {
             document.getElementById(target.id).classList.remove("hidden");
             card2class = target.className;
             card2id = target.id;
             document.getElementById(target.id).classList.add("visible");
 
-            setTimeout(function()  {
+            setTimeout(function() {
 
                 if (card1class == card2class) {
                     document.getElementById(card1id).classList.remove("visible");
@@ -47,24 +42,21 @@ namespace Memorie {
 
                     document.getElementById(card1id).classList.add("taken");
                     document.getElementById(card2id).classList.add("taken");
-                    score = score + 1;
+                    score++;
                     if (score == numPairs) {
-                        prompt("Gratuliere!");
+                        alert("Gratuliere! Du hast gewonen!");
                     }
-               
-                } else {
+                    counter = 0;
+                }else {
 
                     document.getElementById(card1id).classList.remove("visible");
                     document.getElementById(card2id).classList.remove("visible");
 
                     document.getElementById(card1id).classList.add("hidden");
                     document.getElementById(card2id).classList.add("hidden");
+                    counter = 0;
                 }
             }, 2000);
-
-
-            counter = 0;
-
         }
     }
 
@@ -101,12 +93,9 @@ namespace Memorie {
             childNodeHTML += cardArray[i];
             childNodeHTML += "</div></div>";
             console.log(i);
-//            console.log(cardArray[i]);
         }
         childNodeHTML += "</div>";
         node.innerHTML += childNodeHTML;
-
-        console.log(childNodeHTML);
     }
 
     /*Spielerinfo*/
@@ -127,17 +116,14 @@ namespace Memorie {
         }
         childNodeHTML += "</div>";
         node.innerHTML += childNodeHTML;
-
-        console.log(childNodeHTML);
     }
 
     /* Hauptprogramm */
     function main(): void {
-        console.log("main");
         /* numPlayers erstellen */
         let i: boolean = true;
         while (i) {
-            numPlayer = parseInt(prompt("Bitte wähhlen Sie zwischen 1 und 4 Spielern"), 10);
+            numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
             if (numPlayer >= 1 && numPlayer <= 4) {
                 i = false;
             }
@@ -167,13 +153,15 @@ namespace Memorie {
         }
 
         /*Gratulation*/
-        
+
 
         /* Spielboard erzeugen */
         createBoard();
 
         /* Spielerinfo erzeugen */
         playerInfo();
+
+        window.addEventListener("click", changeStatus);
     }
     // Add EventListener - Main() wird ausgeführt, sobald das DOM vollständig geladen ist
     document.addEventListener("DOMContentLoaded", main);
