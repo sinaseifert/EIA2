@@ -16,19 +16,16 @@ var Memorie;
     /*Spieler und Score Array*/
     var player = [];
     var score = 0;
-    /*Array, dass nur zwei Stellen speichert*/
-    //    let visibleCards : string [] =       
-    window.addEventListener("click", changeStatus);
     function changeStatus(_event) {
         var target = _event.target;
-        if (counter == 0) {
+        counter++;
+        if (counter < 2) {
             document.getElementById(target.id).classList.remove("hidden");
             card1class = target.className;
             card1id = target.id;
             document.getElementById(target.id).classList.add("visible");
-            counter++;
         }
-        else if (counter == 1) {
+        else if (counter == 2) {
             document.getElementById(target.id).classList.remove("hidden");
             card2class = target.className;
             card2id = target.id;
@@ -39,19 +36,20 @@ var Memorie;
                     document.getElementById(card2id).classList.remove("visible");
                     document.getElementById(card1id).classList.add("taken");
                     document.getElementById(card2id).classList.add("taken");
-                    score = score + 1;
+                    score++;
                     if (score == numPairs) {
-                        prompt("Gratuliere!");
+                        alert("Gratuliere! Du hast gewonen!");
                     }
+                    counter = 0;
                 }
                 else {
                     document.getElementById(card1id).classList.remove("visible");
                     document.getElementById(card2id).classList.remove("visible");
                     document.getElementById(card1id).classList.add("hidden");
                     document.getElementById(card2id).classList.add("hidden");
+                    counter = 0;
                 }
             }, 2000);
-            counter = 0;
         }
     }
     /* Status mischen */
@@ -88,7 +86,6 @@ var Memorie;
         }
         childNodeHTML += "</div>";
         node.innerHTML += childNodeHTML;
-        console.log(childNodeHTML);
     }
     /*Spielerinfo*/
     function playerInfo() {
@@ -108,15 +105,13 @@ var Memorie;
         }
         childNodeHTML += "</div>";
         node.innerHTML += childNodeHTML;
-        console.log(childNodeHTML);
     }
     /* Hauptprogramm */
     function main() {
-        console.log("main");
         /* numPlayers erstellen */
         var i = true;
         while (i) {
-            numPlayer = parseInt(prompt("Bitte w�hhlen Sie zwischen 1 und 4 Spielern"), 10);
+            numPlayer = parseInt(prompt("Bitte w�hlen Sie zwischen 1 und 4 Spielern"), 10);
             if (numPlayer >= 1 && numPlayer <= 4) {
                 i = false;
             }
@@ -146,6 +141,7 @@ var Memorie;
         createBoard();
         /* Spielerinfo erzeugen */
         playerInfo();
+        window.addEventListener("click", changeStatus);
     }
     // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
     document.addEventListener("DOMContentLoaded", main);
