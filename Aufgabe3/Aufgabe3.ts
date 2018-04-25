@@ -1,16 +1,14 @@
 namespace Memorie {
-    /*Variablen erstellen*/
+        /*Variablen erstellen*/
     let numPlayer: number = 0;
     let numPairs: number = 0;
 
-    /*Variablen zum Status‰ndern f¸rs Spielen*/
+    /*Variablen zum Status√§ndern f√ºrs Spielen*/
     let counter: number = 0;
+    let klickbar: boolean = true;
 
-    /*Abgleichen der offenen Karten*/
-    let card1class: string;
-    let card2class: string;
-    let card1id: string;
-    let card2id: string;
+    /*Array f√ºr offene Karten*/
+    let visibleCards: HTMLElement[] = [];
 
     /*Array*/
     let cardContent: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
@@ -22,43 +20,63 @@ namespace Memorie {
 
     function changeStatus(_event: Event): void {
         let target: HTMLDivElement = <HTMLDivElement>_event.target;
-        counter++;
-        if (counter < 2) {
-            document.getElementById(target.id).classList.remove("hidden");
-            card1class = target.className;
-            card1id = target.id;
-            document.getElementById(target.id).classList.add("visible");
-        }else if (counter == 2) {
-            document.getElementById(target.id).classList.remove("hidden");
-            card2class = target.className;
-            card2id = target.id;
-            document.getElementById(target.id).classList.add("visible");
+        if ( target.classList.contains( "hidden" ) && klickbar ) {
 
-            setTimeout(function() {
+            if ( counter < 2 ) {
+                target.classList.remove( "hidden" );
+                visibleCards.push( target );
+            }
 
-                if (card1class == card2class) {
-                    document.getElementById(card1id).classList.remove("visible");
-                    document.getElementById(card2id).classList.remove("visible");
+            counter++;
 
-                    document.getElementById(card1id).classList.add("taken");
-                    document.getElementById(card2id).classList.add("taken");
-                    score++;
-                    if (score == numPairs) {
-                        alert("Gratuliere! Du hast gewonen!");
-                    }
-                    counter = 0;
-                }else {
+            if ( counter == 2 ) {
 
-                    document.getElementById(card1id).classList.remove("visible");
-                    document.getElementById(card2id).classList.remove("visible");
+                klickbar = false;
 
-                    document.getElementById(card1id).classList.add("hidden");
-                    document.getElementById(card2id).classList.add("hidden");
-                    counter = 0;
+                counter = 0;
+
+                if ( visibleCards[0].innerText === visibleCards[1].innerText ) {
+
+                    setTimeout(() => {
+
+                        visibleCards[0].classList.add( "taken" );
+                        visibleCards[1].classList.add( "taken" );
+
+                        visibleCards = [];
+
+                        klickbar = true;
+
+                        if ( document.getElementsByClassName( "hidden" ).length == 0 ) {
+                            alert( "Gratuliere! Du hast gewonnen!" )
+                        }
+
+                    }, 1500 );
                 }
-            }, 2000);
+                else {
+
+                    //setTimeout Funktion
+
+                    setTimeout(() => {
+
+                        visibleCards[0].classList.add( "hidden" );
+                        visibleCards[1].classList.add( "hidden" );
+
+                        visibleCards = [];
+                        klickbar = true;
+
+                    }, 1500 );
+
+
+                }
+
+
+            }
+
         }
+
+
     }
+           
 
     /* Status mischen */
     function mixStatus(): string {
@@ -123,7 +141,7 @@ namespace Memorie {
         /* numPlayers erstellen */
         let i: boolean = true;
         while (i) {
-            numPlayer = parseInt(prompt("Bitte w‰hlen Sie zwischen 1 und 4 Spielern"), 10);
+            numPlayer = parseInt(prompt("Bitte w√§hlen Sie zwischen 1 und 4 Spielern"), 10);
             if (numPlayer >= 1 && numPlayer <= 4) {
                 i = false;
             }
@@ -139,15 +157,15 @@ namespace Memorie {
         /* numPairs erstellen */
         i = true;
         while (i) {
-            numPairs = parseInt(prompt("Bitte w‰hlen Sie zwischen 5 und 15 Kartenpaaren"), 10);
+            numPairs = parseInt(prompt("Bitte w√§hlen Sie zwischen 5 und 15 Kartenpaaren"), 10);
             if (numPairs >= 5 && numPairs <= 15) {
                 i = false;
             }
         }
 
-        /* Schleife f¸r Kartenpaare */
+        /* Schleife fÔøΩr Kartenpaare */
         for (let i: number = 0; i < numPairs; i++) {
-            /* cardContent 2x an cardArray [] anf¸gen */
+            /* cardContent 2x an cardArray [] anfÔøΩgen */
             cardArray.push(cardContent[i]);
             cardArray.push(cardContent[i]);
         }
@@ -163,6 +181,6 @@ namespace Memorie {
 
         window.addEventListener("click", changeStatus);
     }
-    // Add EventListener - Main() wird ausgef¸hrt, sobald das DOM vollst‰ndig geladen ist
+    // Add EventListener - Main() wird ausgefÔøΩhrt, sobald das DOM vollstÔøΩndig geladen ist
     document.addEventListener("DOMContentLoaded", main);
 }

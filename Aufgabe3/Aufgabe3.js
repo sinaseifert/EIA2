@@ -3,13 +3,11 @@ var Memorie;
     /*Variablen erstellen*/
     var numPlayer = 0;
     var numPairs = 0;
-    /*Variablen zum Status�ndern f�rs Spielen*/
+    /*Variablen zum Statusändern fürs Spielen*/
     var counter = 0;
-    /*Abgleichen der offenen Karten*/
-    var card1class;
-    var card2class;
-    var card1id;
-    var card2id;
+    var klickbar = true;
+    /*Array für offene Karten*/
+    var visibleCards = [];
     /*Array*/
     var cardContent = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
     var cardArray = [];
@@ -18,38 +16,36 @@ var Memorie;
     var score = 0;
     function changeStatus(_event) {
         var target = _event.target;
-        counter++;
-        if (counter < 2) {
-            document.getElementById(target.id).classList.remove("hidden");
-            card1class = target.className;
-            card1id = target.id;
-            document.getElementById(target.id).classList.add("visible");
-        }
-        else if (counter == 2) {
-            document.getElementById(target.id).classList.remove("hidden");
-            card2class = target.className;
-            card2id = target.id;
-            document.getElementById(target.id).classList.add("visible");
-            setTimeout(function () {
-                if (card1class == card2class) {
-                    document.getElementById(card1id).classList.remove("visible");
-                    document.getElementById(card2id).classList.remove("visible");
-                    document.getElementById(card1id).classList.add("taken");
-                    document.getElementById(card2id).classList.add("taken");
-                    score++;
-                    if (score == numPairs) {
-                        alert("Gratuliere! Du hast gewonen!");
-                    }
-                    counter = 0;
+        if (target.classList.contains("hidden") && klickbar) {
+            if (counter < 2) {
+                target.classList.remove("hidden");
+                visibleCards.push(target);
+            }
+            counter++;
+            if (counter == 2) {
+                klickbar = false;
+                counter = 0;
+                if (visibleCards[0].innerText === visibleCards[1].innerText) {
+                    setTimeout(function () {
+                        visibleCards[0].classList.add("taken");
+                        visibleCards[1].classList.add("taken");
+                        visibleCards = [];
+                        klickbar = true;
+                        if (document.getElementsByClassName("hidden").length == 0) {
+                            alert("Gratuliere! Du hast gewonnen!");
+                        }
+                    }, 1500);
                 }
                 else {
-                    document.getElementById(card1id).classList.remove("visible");
-                    document.getElementById(card2id).classList.remove("visible");
-                    document.getElementById(card1id).classList.add("hidden");
-                    document.getElementById(card2id).classList.add("hidden");
-                    counter = 0;
+                    //setTimeout Funktion
+                    setTimeout(function () {
+                        visibleCards[0].classList.add("hidden");
+                        visibleCards[1].classList.add("hidden");
+                        visibleCards = [];
+                        klickbar = true;
+                    }, 1500);
                 }
-            }, 2000);
+            }
         }
     }
     /* Status mischen */
@@ -111,7 +107,7 @@ var Memorie;
         /* numPlayers erstellen */
         var i = true;
         while (i) {
-            numPlayer = parseInt(prompt("Bitte w�hlen Sie zwischen 1 und 4 Spielern"), 10);
+            numPlayer = parseInt(prompt("Bitte wählen Sie zwischen 1 und 4 Spielern"), 10);
             if (numPlayer >= 1 && numPlayer <= 4) {
                 i = false;
             }
@@ -125,7 +121,7 @@ var Memorie;
         /* numPairs erstellen */
         i = true;
         while (i) {
-            numPairs = parseInt(prompt("Bitte w�hlen Sie zwischen 5 und 15 Kartenpaaren"), 10);
+            numPairs = parseInt(prompt("Bitte wählen Sie zwischen 5 und 15 Kartenpaaren"), 10);
             if (numPairs >= 5 && numPairs <= 15) {
                 i = false;
             }
