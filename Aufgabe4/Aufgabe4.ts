@@ -3,7 +3,10 @@ namespace Aufgabe4 {
     let numPlayer: number = 0;
 
     /*Anzahl der Karten*/
-    export let numPairs: number = 0;
+    let numPairs: number = 0;
+
+    /*Aktuelle Deck Auswahl*/
+    let actualDeck: string = "";
 
     /*Variablen zum Statusändern fürs Spielen*/
     let counter: number = 0;
@@ -12,10 +15,11 @@ namespace Aufgabe4 {
     /*Array für offene Karten*/
     let visibleCards: HTMLElement[] = [];
 
-//    /*Kartendecks*/
-//    let actualCardDeck: Deck = undefined;
+    //    /*Kartendecks*/
+    //    let actualCardDeck: Deck = undefined;
 
     /*Array*/
+    let cardContent: string[] = [];
     let cardArray: string[] = [];
 
     /*Spieler und Score Array*/
@@ -23,7 +27,44 @@ namespace Aufgabe4 {
     let score: number[] = [0, 0, 0, 0];
     window.addEventListener("click", changeStatus);
 
-    createDecks();
+    export function playerInput(element: HTMLInputElement): void {
+        numPlayer = parseInt(element.value);
+
+        for (let i: number = 1; i <= numPlayer; i++) {
+            let input: HTMLInputElement = <HTMLInputElement>document.getElementById("Spieler" + i);
+            let label: HTMLElement = document.getElementById("Spielername" + i);
+            if (i <= numPlayer) {
+                input.required = true;
+                label.style.opacity = "1";
+
+            }
+            else {
+                input.required = false;
+                label.style.opacity = "0.33";
+                input.value = "";
+            }
+            console.log(element.value);
+        }
+    }
+
+    export function numPairInput(value: number): void {
+        document.getElementById("numberOfPairs_label").innerText = value.toString();
+        numPairs = value;
+        console.log(value);
+    }
+
+    export function setCardDeck(value: string): void {
+        actualDeck = value;
+        console.log(actualDeck);
+
+        let numOfPairs: HTMLInputElement = <HTMLInputElement>document.getElementById("numberOfPairs_slider");
+        numOfPairs.max = decks[actualDeck].content.length.toString();
+
+        if (decks[actualDeck].content.length < parseInt(numOfPairs.value)) {
+            numOfPairs.value = numOfPairs.max;
+        }
+        document.getElementById("numberOfPairs_label").innerText = numOfPairs.value;
+    }
 
     function changeStatus(_event: Event): void {
         let target: HTMLDivElement = <HTMLDivElement>_event.target;
@@ -54,7 +95,7 @@ namespace Aufgabe4 {
                         klickbar = true;
 
                         if (document.getElementsByClassName("hidden").length == 0) {
-                            alert("Gratuliere! Du hast gewonnen!")
+                            alert("Gratuliere! Du hast gewonnen!");
                         }
 
                     }, 1500);
@@ -72,24 +113,11 @@ namespace Aufgabe4 {
                         klickbar = true;
 
                     }, 1500);
-
-
                 }
-
-
             }
-
         }
-
-
     }
-
-
-//    /* Status mischen */
-//    export function mixStatus(): string {
-//        return "hidden";
-//    }
-
+    
     /* Karten mischen Shufflefunktion */
     function shuffleCardArray(): void {
         let i: number = cardArray.length;
@@ -105,7 +133,7 @@ namespace Aufgabe4 {
 
     /*Create Board*/
     function createBoard(): void {
-        let node: any = document.getElementById("Spielfeld");
+        let node: HTMLElement = document.getElementById("Spielfeld");
         shuffleCardArray();
         let childNodeHTML: string = "";
         childNodeHTML += "<h2>Memoryboard</h2>";
@@ -113,7 +141,7 @@ namespace Aufgabe4 {
         for (let i: number = 0; i < cardArray.length; i++) {
             childNodeHTML += "<div>";
             childNodeHTML += "<div id=" + i + " attr=" + i + " class='";
-            childNodeHTML += cardArray[i] + " hidden"; /*+ mixStatus();*/
+            childNodeHTML += cardArray[i] + " hidden";
             childNodeHTML += "'>";
             childNodeHTML += cardArray[i];
             childNodeHTML += "</div></div>";
@@ -125,7 +153,7 @@ namespace Aufgabe4 {
 
     /*Spielerinfo*/
     function playerInfo(): void {
-        let node: any = document.getElementById("Spielerinfo");
+        let node: HTMLElement = document.getElementById("Spielerinfo");
         let childNodeHTML: string = "";
         childNodeHTML += "<div>";
         for (let i: number = 0; i < player.length; i++) {
@@ -145,58 +173,39 @@ namespace Aufgabe4 {
 
     /* Hauptprogramm */
     export function main(): void {
-        /* Spielerabfrage erstellen */
-//        let numPlayer: number;
-
-        let collection: NodeListOf<Element> = document.getElementById("Spieler").getElementsByTagName("fieldset");
-        numPlayer = parseInt(collection.value)
-
-        for (let i = 0; i < numPlayer; i++) {
-            collection = document.getElementById("Spielername"+(i+1)).getElementsByTagname("input");
-            collection.setStyle = "opacity: 1";
-            collection.required = true;
-            player.push(collection.value);
-            console.log(collection.value);
+        
+        createDecks();
+        
+        //Auswertung der Spielernamen
+        for (let i: number = 1; i <= numPlayer; i++) {
+            let playerName: HTMLElement = document.getElementById("Spieler" + i);
+            if ((<HTMLInputElement>playerName).value == "") {
+                player.push("Mickey");
+            } else {
+                player.push((<HTMLInputElement>playerName).value);
+            }
         }
-        
-        /*Auswertung Kartenpaare*/
-        collection = document.getElementById("numberOfPairs").getElementsByTagname("fieldset");
-        
-        
-        /*Kartensatz Auswahl / Erzeugung Kartenpaare*/
-        collection = document.getElementById("Cards").getElementsByTagname("fieldset");
-        
-        for (let i: number = 0; i < numPairs; i++) {
-            /* cardContent 2x an cardArray [] anfügen */
-            cardArray.push(decks[collection.value]);
-            cardArray.push(decks[collection.value]);
-        }
-        currentCardDeck = decks[element.value];
-        
 
         /*Karten des jeweilig ausgewählten Satzes erzeugen*/
-        populateCardArray(collection.value);
-        
+        cardContent = decks[actualDeck].content;
+
+        /*Erzeugung Kartenpaare*/
+        for (let i: number = 0; i < numPairs; i++) {
+            /* cardContent 2x an cardArray [] anfügen */
+            cardArray.push(cardContent[i]);
+            cardArray.push(cardContent[i]);
+        }
+
+        /*Formular wird gelöscht nachdem alle Einstellungen übernommen wurden*/
+        document.getElementById("Formular").remove();
+
         /* Spielboard erzeugen */
         createBoard();
 
         /* Spielerinfo erzeugen */
         playerInfo();
 
-        /*Formular wird gelöscht nachdem alle Einstellungen übernommen wurden*/
-        document.getElementById("Formular").remove();
-        
-    }   
-        
-    
-    
-        function playMemory(_event: Event): void {
-            let playGame: HTMLButtonElement = <HTMLButtonElement>document.getElementById("Play");
-            for
-        }
-            
-
-    
-    // Add EventListener - Main() wird ausgeführt, sobald das DOM vollständig geladen ist
-    document.addEventListener("DOMContentLoaded", main);
+    }
 }
+    //    // Add EventListener - Main() wird ausgeführt, sobald das DOM vollständig geladen ist
+    //    document.addEventListener("DOMContentLoaded", main);

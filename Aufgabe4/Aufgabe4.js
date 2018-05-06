@@ -1,20 +1,60 @@
-var Memorie;
-(function (Memorie) {
-    window.addEventListener("click", changeStatus);
+var Aufgabe4;
+(function (Aufgabe4) {
     /*Variablen erstellen*/
     var numPlayer = 0;
+    /*Anzahl der Karten*/
     var numPairs = 0;
+    /*Aktuelle Deck Auswahl*/
+    var actualDeck = "";
     /*Variablen zum Status�ndern f�rs Spielen*/
     var counter = 0;
     var klickbar = true;
     /*Array f�r offene Karten*/
     var visibleCards = [];
+    //    /*Kartendecks*/
+    //    let actualCardDeck: Deck = undefined;
     /*Array*/
-    var cardContent = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+    var cardContent = [];
     var cardArray = [];
     /*Spieler und Score Array*/
     var player = [];
-    var score = 0;
+    var score = [0, 0, 0, 0];
+    window.addEventListener("click", changeStatus);
+    function playerInput(element) {
+        numPlayer = parseInt(element.value);
+        for (var i = 1; i <= numPlayer; i++) {
+            var input = document.getElementById("Spieler" + i);
+            var label = document.getElementById("Spielername" + i);
+            if (i <= numPlayer) {
+                input.required = true;
+                label.style.opacity = "1";
+            }
+            else {
+                input.required = false;
+                label.style.opacity = "0.33";
+                input.value = "";
+            }
+            console.log(element.value);
+        }
+    }
+    Aufgabe4.playerInput = playerInput;
+    function numPairInput(value) {
+        document.getElementById("numberOfPairs_label").innerText = value.toString();
+        numPairs = value;
+        console.log(value);
+    }
+    Aufgabe4.numPairInput = numPairInput;
+    function setCardDeck(value) {
+        actualDeck = value;
+        console.log(actualDeck);
+        var numOfPairs = document.getElementById("numberOfPairs_slider");
+        numOfPairs.max = Aufgabe4.decks[actualDeck].content.length.toString();
+        if (Aufgabe4.decks[actualDeck].content.length < parseInt(numOfPairs.value)) {
+            numOfPairs.value = numOfPairs.max;
+        }
+        document.getElementById("numberOfPairs_label").innerText = numOfPairs.value;
+    }
+    Aufgabe4.setCardDeck = setCardDeck;
     function changeStatus(_event) {
         var target = _event.target;
         if (target.classList.contains("hidden") && klickbar) {
@@ -26,7 +66,7 @@ var Memorie;
             if (counter == 2) {
                 klickbar = false;
                 counter = 0;
-                if (visibleCards[0].innerText === visibleCards[1].innerText) {
+                if (visibleCards[0].innerText == visibleCards[1].innerText) {
                     setTimeout(function () {
                         visibleCards[0].classList.add("taken");
                         visibleCards[1].classList.add("taken");
@@ -48,10 +88,6 @@ var Memorie;
                 }
             }
         }
-    }
-    /* Status mischen */
-    function mixStatus() {
-        return "hidden";
     }
     /* Karten mischen Shufflefunktion */
     function shuffleCardArray() {
@@ -75,7 +111,7 @@ var Memorie;
         for (var i = 0; i < cardArray.length; i++) {
             childNodeHTML += "<div>";
             childNodeHTML += "<div id=" + i + " attr=" + i + " class='";
-            childNodeHTML += cardArray[i] + " " + mixStatus();
+            childNodeHTML += cardArray[i] + " hidden";
             childNodeHTML += "'>";
             childNodeHTML += cardArray[i];
             childNodeHTML += "</div></div>";
@@ -105,45 +141,34 @@ var Memorie;
     }
     /* Hauptprogramm */
     function main() {
-        /* numPlayers erstellen */
-        //        let i: boolean = true;
-        //        while (i) {
-        //            numPlayer = parseInt(prompt("Bitte w�hlen Sie zwischen 1 und 4 Spielern"), 10);
-        //            if (numPlayer >= 1 && numPlayer <= 4) {
-        //                i = false;
-        //            }
-        //        }
-        //
-        //        for (let i: number = 0; i < numPlayer; i++) {
-        //            player[i] = prompt("Bitte Spielernamen " + (i + 1) + " eingeben");
-        //            if (player[i] == null) {
-        //                player[i] = "Mickey";
-        //            }
-        //        }
-        //
-        //        /* numPairs erstellen */
-        //        i = true;
-        //        while (i) {
-        //            numPairs = parseInt(prompt("Bitte w�hlen Sie zwischen 5 und 15 Kartenpaaren"), 10);
-        //            if (numPairs >= 5 && numPairs <= 15) {
-        //                i = false;
-        //            }
-        //        }
-        /* Schleife f�r Kartenpaare */
+        Aufgabe4.createDecks();
+        //Auswertung der Spielernamen
+        for (var i = 1; i <= numPlayer; i++) {
+            var playerName = document.getElementById("Spieler" + i);
+            if (playerName.value == "") {
+                player.push("Mickey");
+            }
+            else {
+                player.push(playerName.value);
+            }
+        }
+        /*Karten des jeweilig ausgew�hlten Satzes erzeugen*/
+        cardContent = Aufgabe4.decks[actualDeck].content;
+        /*Erzeugung Kartenpaare*/
         for (var i = 0; i < numPairs; i++) {
             /* cardContent 2x an cardArray [] anf�gen */
             cardArray.push(cardContent[i]);
             cardArray.push(cardContent[i]);
         }
+        /*Formular wird gel�scht nachdem alle Einstellungen �bernommen wurden*/
+        document.getElementById("Formular").remove();
         /* Spielboard erzeugen */
         createBoard();
         /* Spielerinfo erzeugen */
         playerInfo();
-        function playMemory(_event) {
-            var playGame = document.getElementById("Play");
-        }
     }
-    // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
-    document.addEventListener("DOMContentLoaded", main);
-})(Memorie || (Memorie = {}));
+    Aufgabe4.main = main;
+})(Aufgabe4 || (Aufgabe4 = {}));
+//    // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
+//    document.addEventListener("DOMContentLoaded", main); 
 //# sourceMappingURL=Aufgabe4.js.map
