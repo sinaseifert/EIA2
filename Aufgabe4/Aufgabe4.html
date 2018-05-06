@@ -1,0 +1,68 @@
+<!--Aufgabe: (Aufgabe 4)
+		Name: Sina Seifert
+		Matrikel: (257207)
+		Datum: (02.05.2018)
+		Hiermit versichere ich, dass ich diesen
+		Code selbst geschrieben habe. Er wurde
+		nicht kopiert und auch nicht diktiert.-->
+		
+<!DOCTYPE html>
+
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<title>Memory-Spiel</title>
+		<link rel="stylesheet" type="text/css" href="Aufgabe3.css">
+		<script src="Aufgabe3.js"></script>
+	</head>
+	<body>
+		<main id="Spielfeld">
+			<div id="Formular">
+			
+			<!-- Zwischen 1 und 4 Spielern wählen -->
+			<fieldset id="Spieler">
+			<h3>Spieleranzahl</h3>
+			<input type="number" name="Stepper" step="1" min="1" max="4"/>
+			</fieldset>
+			
+			<!-- Spielernamen eingeben -->
+			<div id="numbOfPlayer">
+			<h3>Spielername(n)</h3>
+			<fieldset id="Spielername1">
+			<input  type="text" name="Name" placeholder="Spielername" value="" required/>
+			</fieldset>
+			<fieldset id="Spielername2" style="opacity: 0.33">
+			<input  type="text" name="Name"  placeholder="Spielername" value=""/>
+			</fieldset>
+			<fieldset id="Spielername3" style="opacity: 0.33">
+			<input  type="text" name="Name" placeholder="Spielername" value=""/>
+			</fieldset>
+			<fieldset id="Spielername4" style="opacity: 0.33">
+			<input  type="text" name="Name" placeholder="Spielername" value=""/>
+			</fieldset></div>
+			
+			<!-- Zwischen drei unterschiedlichen Decks wählen -->
+			<fieldset id="Cards">
+			<h3>Kartensätze</h3>
+			<input type="radio" name="Radiogroup" checked value="letters" id="radio1"/>
+			<label for="radio1">Alphabet</label>
+			<input type="radio" name="Radiogroup" value="animals" id="radio2"/>
+			<label for="radio2">Tiere</label>
+			<input type="radio" name="Radiogroup" value="fruits" id="radio3"/>
+			<label for="radio3">Pflanzen</label>
+			</fieldset>
+			
+			<!-- Anzahl der Kartenpaare wählen -->
+		 	<fieldset id="numberOfPairs">
+		 	<h3>Anzahl der Kartenpaare</h3>
+			<input type="number" name="Slider" min="5" max="26" step="1"/>
+			</fieldset> 
+			<!-- Startbutton -->
+			<fieldset id="playGame">
+			<button onclick="Aufgabe4.main()">play Memory</button>
+			</fieldset></div>
+		</main>
+		<footer id="Spielerinfo">
+		</footer>
+	</body>
+</html>

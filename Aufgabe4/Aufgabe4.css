@@ -1,0 +1,129 @@
+/*Schriften*/
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet');
+
+/*Stylesheet Smartphone*/
+
+*{
+	margin: 0;
+	padding: 0;
+}
+/*allgemeine Attribute für den Body*/
+body{
+	font-family: ;
+	font-size: ;
+}
+/*Überschrift*/
+h2 {
+	text-align: center;
+}
+
+/*Memoryboard*/
+#Spielfeld {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	background-color: #408080;
+	
+}
+
+#Spielfeld h2 {
+	color: #ff8080;
+}
+
+/*Kartendivs*/
+#Spielfeld > div{
+	position: relative;
+	margin: 5%;
+	height: auto;
+	width: auto;
+	display: flex;
+	flex-wrap: wrap;	
+}
+
+#Spielfeld div > div {
+	height: 70px;
+	width: 70px;
+	border-radius: 5px;
+	margin: 0px 20px 20px 0px;
+	cursor: pointer;
+	text-align: center;
+	line-height: 70px;
+	position: relative;
+	font-family: 'Dancing Script' , cursive;	
+	font-size: 200%;
+}
+
+
+/*Spielinfo/ Footer*/
+#Spielerinfo{
+	background-color: Whitesmoke;
+	height: auto;
+	width: 100%;
+}
+
+#Spielerinfo div > div {
+	height: 50px;
+	width: auto;
+	margin: 5px 5px 0px 25px;
+	float: left;
+	font-family: 'Cairo', sans-serif;
+}
+
+.hidden {
+	background-color: #004040;
+	text-indent: -99999px;
+}
+
+.taken {
+	background-color: #408080;
+	transform: scale(0);
+}
+.visible{
+	background-color: Whitesmoke;
+  	pointer-events: auto;
+	
+}
+
+/* CSS-Tablet Portrait*/
+/*2-spaltiges Layout*/
+@media screen and (min-width:571px){
+	#Spielfeld div > div {
+		height: 80px;
+		width: 80px;
+		line-height: 80px;
+	}
+	
+	#Spielerinfo div > div {
+		margin: 5px 50px 0px 50px;
+	}
+}	
+	
+/*Tablet landscape*/
+/* 3-spaltiges Layout*/
+@media screen and (min-width:769px){
+	#Spielfeld div > div {
+		height: 100px;
+		width: 100px;
+		line-height: 100px;
+	}
+	
+	#Spielerinfo div > div {
+		margin: 5px 10px 0px 30px;
+	}
+}
+
+/*Desktopansicht ab 1025px*/
+/*4-spaltiges Layout*/
+@media screen and (min-width:1025px){
+	#Spielfeld div > div {
+		height: 144px;
+		width: 144px;
+		line-height: 144px;
+	}
+	
+	#Spielerinfo div > div {
+		margin: 5px 50px 0px 50px;
+	}
+}
+	
