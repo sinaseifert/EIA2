@@ -1,30 +1,28 @@
 var Aufgabe4;
 (function (Aufgabe4) {
     /*Variablen erstellen*/
-    var numPlayer = 0;
+    let numPlayer = 1;
     /*Anzahl der Karten*/
-    var numPairs = 0;
+    Aufgabe4.numPairs = 5;
     /*Aktuelle Deck Auswahl*/
-    var actualDeck = "";
-    /*Variablen zum Status�ndern f�rs Spielen*/
-    var counter = 0;
-    var klickbar = true;
-    /*Array f�r offene Karten*/
-    var visibleCards = [];
-    //    /*Kartendecks*/
-    //    let actualCardDeck: Deck = undefined;
+    let actualDeck = undefined;
+    /*Variablen zum Status ändern fürs Spielen*/
+    let counter = 0;
+    let klickbar = true;
+    let actualPlayer = 1;
+    let tempScore = [];
+    /*Array für offene Karten*/
+    let visibleCards = [];
     /*Array*/
-    var cardContent = [];
-    var cardArray = [];
-    /*Spieler und Score Array*/
-    var player = [];
-    var score = [0, 0, 0, 0];
+    let cardArray = [];
     window.addEventListener("click", changeStatus);
+    Aufgabe4.createDecks();
+    Aufgabe4.createPlayer();
     function playerInput(element) {
         numPlayer = parseInt(element.value);
-        for (var i = 1; i <= numPlayer; i++) {
-            var input = document.getElementById("Spieler" + i);
-            var label = document.getElementById("Spielername" + i);
+        for (let i = 1; i <= 4; i++) {
+            let input = document.getElementById("Spieler" + i);
+            let label = document.getElementById("Spielername" + i);
             if (i <= numPlayer) {
                 input.required = true;
                 label.style.opacity = "1";
@@ -34,29 +32,32 @@ var Aufgabe4;
                 label.style.opacity = "0.33";
                 input.value = "";
             }
-            console.log(element.value);
         }
     }
     Aufgabe4.playerInput = playerInput;
     function numPairInput(value) {
-        document.getElementById("numberOfPairs_label").innerText = value.toString();
-        numPairs = value;
-        console.log(value);
+        document.getElementById("numberOfPairs_label").innerText = value;
+        Aufgabe4.numPairs = parseInt(value);
     }
     Aufgabe4.numPairInput = numPairInput;
     function setCardDeck(value) {
-        actualDeck = value;
-        console.log(actualDeck);
-        var numOfPairs = document.getElementById("numberOfPairs_slider");
-        numOfPairs.max = Aufgabe4.decks[actualDeck].content.length.toString();
-        if (Aufgabe4.decks[actualDeck].content.length < parseInt(numOfPairs.value)) {
-            numOfPairs.value = numOfPairs.max;
+        actualDeck = Aufgabe4.decks[value];
+        setSilderValue();
+    }
+    Aufgabe4.setCardDeck = setCardDeck;
+    function setSilderValue() {
+        let numOfPairs = document.getElementById("numberOfPairs_slider");
+        numOfPairs.max = actualDeck.content.length.toString();
+        let max = actualDeck.content.length;
+        let actual = parseInt(numOfPairs.value);
+        if (max < actual) {
+            numOfPairs.value = max.toString();
         }
         document.getElementById("numberOfPairs_label").innerText = numOfPairs.value;
     }
-    Aufgabe4.setCardDeck = setCardDeck;
+    Aufgabe4.setSilderValue = setSilderValue;
     function changeStatus(_event) {
-        var target = _event.target;
+        let target = _event.target;
         if (target.classList.contains("hidden") && klickbar) {
             if (counter < 2) {
                 target.classList.remove("hidden");
@@ -67,19 +68,27 @@ var Aufgabe4;
                 klickbar = false;
                 counter = 0;
                 if (visibleCards[0].innerText == visibleCards[1].innerText) {
-                    setTimeout(function () {
+                    setTimeout(() => {
                         visibleCards[0].classList.add("taken");
                         visibleCards[1].classList.add("taken");
                         visibleCards = [];
+                        tempScore[actualPlayer]++;
+                        document.getElementById("Player" + actualPlayer).innerText = "Punktestand: " + tempScore[actualPlayer].toString();
+                        //                        players["Player" + actualPlayer].score++;
+                        //                        document.getElementById("Player" + actualPlayer).innerText = "Punktestand: " + players["Player" + actualPlayer].score.toString();
                         klickbar = true;
                         if (document.getElementsByClassName("hidden").length == 0) {
-                            alert("Gratuliere! Du hast gewonnen!");
+                            alert("Gratuliere! Game Over!");
                         }
                     }, 1500);
                 }
                 else {
                     //setTimeout Funktion
-                    setTimeout(function () {
+                    actualPlayer++;
+                    if (actualPlayer > numPlayer) {
+                        actualPlayer = 1;
+                    }
+                    setTimeout(() => {
                         visibleCards[0].classList.add("hidden");
                         visibleCards[1].classList.add("hidden");
                         visibleCards = [];
@@ -89,11 +98,15 @@ var Aufgabe4;
             }
         }
     }
+    /* Status mischen */
+    function mixStatus() {
+        return "hidden";
+    }
     /* Karten mischen Shufflefunktion */
     function shuffleCardArray() {
-        var i = cardArray.length;
-        var j = 0;
-        var temp = "";
+        let i = cardArray.length;
+        let j = 0;
+        let temp = "";
         while (--i > 0) {
             j = Math.floor(Math.random() * (i + 1));
             temp = cardArray[j];
@@ -101,39 +114,55 @@ var Aufgabe4;
             cardArray[i] = temp;
         }
     }
+    /*CreateFormular*/
+    //    function createFormular(): void {
+    //        let node: HTMLElement = document.getElementById("Formular");
+    //        let childNodeHTML: string = "";
+    //        childNodeHTML += "<fieldset>";
+    //            for (let i: number = 
+    //    }   
     /*Create Board*/
     function createBoard() {
-        var node = document.getElementById("Spielfeld");
+        let node = document.getElementById("Spielfeld");
         shuffleCardArray();
-        var childNodeHTML = "";
-        childNodeHTML += "<h2>Memoryboard</h2>";
-        childNodeHTML += "<div>";
-        for (var i = 0; i < cardArray.length; i++) {
-            childNodeHTML += "<div>";
-            childNodeHTML += "<div id=" + i + " attr=" + i + " class='";
-            childNodeHTML += cardArray[i] + " hidden";
-            childNodeHTML += "'>";
-            childNodeHTML += cardArray[i];
-            childNodeHTML += "</div></div>";
-            console.log(i);
+        let headline = document.createElement("h2");
+        headline.innerText = "Memoryboard";
+        node.appendChild(headline);
+        //        let childNodeHTML: string = "";
+        //        childNodeHTML += "<h2>Memoryboard</h2>";
+        //        childNodeHTML += "<div>";
+        let gameBoard = document.createElement("div");
+        for (let i = 0; i < cardArray.length; i++) {
+            let cards = document.createElement("div");
+            cards.id = i.toString();
+            cards.setAttribute("attr", i.toString());
+            cards.classList.add(cardArray[i]);
+            cards.classList.add(mixStatus());
+            cards.textContent = cardArray[i];
+            cards.style.backgroundColor = actualDeck.backgroundcolor;
+            cards.style.fontFamily = actualDeck.font;
+            cards.style.fontSize = actualDeck.size + "%";
+            gameBoard.appendChild(cards);
+            node.appendChild(gameBoard);
         }
-        childNodeHTML += "</div>";
-        node.innerHTML += childNodeHTML;
+        //        childNodeHTML += "</div>";
+        //        node.innerHTML += childNodeHTML;
     }
     /*Spielerinfo*/
     function playerInfo() {
-        var node = document.getElementById("Spielerinfo");
-        var childNodeHTML = "";
+        let node = document.getElementById("Spielerinfo");
+        let childNodeHTML = "";
         childNodeHTML += "<div>";
-        for (var i = 0; i < player.length; i++) {
+        for (let i = 1; i <= numPlayer; i++) {
             childNodeHTML += "<div id=Spieler";
             childNodeHTML += i;
             childNodeHTML += ">";
             childNodeHTML += "<p>Spielername: ";
-            childNodeHTML += player[i];
+            childNodeHTML += Aufgabe4.players["Player" + i].name;
             childNodeHTML += "</p>";
-            childNodeHTML += "<p>Punktestand: ";
-            childNodeHTML += score;
+            childNodeHTML += "<p id=Player" + i;
+            childNodeHTML += ">Punktestand: ";
+            childNodeHTML += Aufgabe4.players["Player" + i].score;
             childNodeHTML += "</p></div>";
         }
         childNodeHTML += "</div>";
@@ -141,26 +170,27 @@ var Aufgabe4;
     }
     /* Hauptprogramm */
     function main() {
-        Aufgabe4.createDecks();
         //Auswertung der Spielernamen
-        for (var i = 1; i <= numPlayer; i++) {
-            var playerName = document.getElementById("Spieler" + i);
-            if (playerName.value == "") {
-                player.push("Mickey");
+        for (let i = 1; i <= 4; i++) {
+            let player = document.getElementById("Spieler" + i);
+            if (player.value == "") {
+                Aufgabe4.players["Player" + i].name = "Mickey";
+                Aufgabe4.players["Player" + i].score = 0;
+                tempScore[i] = 0;
             }
             else {
-                player.push(playerName.value);
+                Aufgabe4.players["Player" + i].name = (player.value);
+                Aufgabe4.players["Player" + i].score = 0;
+                tempScore[i] = 0;
             }
         }
-        /*Karten des jeweilig ausgew�hlten Satzes erzeugen*/
-        cardContent = Aufgabe4.decks[actualDeck].content;
         /*Erzeugung Kartenpaare*/
-        for (var i = 0; i < numPairs; i++) {
-            /* cardContent 2x an cardArray [] anf�gen */
-            cardArray.push(cardContent[i]);
-            cardArray.push(cardContent[i]);
+        for (let i = 0; i < Aufgabe4.numPairs; i++) {
+            /* cardContent 2x an cardArray [] anfügen */
+            cardArray.push(actualDeck.content[i]);
+            cardArray.push(actualDeck.content[i]);
         }
-        /*Formular wird gel�scht nachdem alle Einstellungen �bernommen wurden*/
+        /*Formular wird gelöscht nachdem alle Einstellungen übernommen wurden*/
         document.getElementById("Formular").remove();
         /* Spielboard erzeugen */
         createBoard();
@@ -169,6 +199,6 @@ var Aufgabe4;
     }
     Aufgabe4.main = main;
 })(Aufgabe4 || (Aufgabe4 = {}));
-//    // Add EventListener - Main() wird ausgef�hrt, sobald das DOM vollst�ndig geladen ist
+//    // Add EventListener - Main() wird ausgeführt, sobald das DOM vollständig geladen ist
 //    document.addEventListener("DOMContentLoaded", main); 
 //# sourceMappingURL=Aufgabe4.js.map

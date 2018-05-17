@@ -12,59 +12,61 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Memory-Spiel</title>
-		<link rel="stylesheet" type="text/css" href="Aufgabe4.css">
+		<script src="Interfaces.js"></script>
 		<script src="Aufgabe4.js"></script>
-		<script src="Decks.js"></script>
+		<link rel="stylesheet" type="text/css" href="Aufgabe4.css">
 	</head>
 	<body>
-		<main id="Spielfeld">
+		
 			<fieldset id="Formular">
 			
 			<!-- Zwischen 1 und 4 Spielern wählen -->
-			<fieldset id="Spieler">
-			<h4>Spieleranzahl</h4>
-			<input type="number" name="Stepper" step="1" min="1" max="4" value="1" oninput="Aufgabe4.playerInput(this)"/>
-			</fieldset>
+				<fieldset id="Spieler">
+					<h4>Spieleranzahl</h4>
+					<input type="number" name="Stepper" step="1" min="1" max="4" value="1" oninput="Aufgabe4.playerInput(this)"/>
+				</fieldset>
 			
 			<!-- Spielernamen eingeben -->
-			<div id="numbOfPlayer">
-			<h4>Spielername(n)</h4>
-			<fieldset id="Spielername1">
-			<input id="Spieler1" type="text" name="Name" placeholder="Spielername" value="" required/>
-			</fieldset>
-			<fieldset id="Spielername2" style="opacity: 0.33">
-			<input id="Spieler2" type="text" name="Name"  placeholder="Spielername" value=""/>
-			</fieldset>
-			<fieldset id="Spielername3" style="opacity: 0.33">
-			<input id="Spieler3" type="text" name="Name" placeholder="Spielername" value=""/>
-			</fieldset>
-			<fieldset id="Spielername4" style="opacity: 0.33">
-			<input id="Spieler4" type="text" name="Name" placeholder="Spielername" value=""/>
-			</fieldset></div>
+				<fieldset id="numbOfPlayer">
+					<h4>Spielername(n)</h4>
+				<fieldset id="Spielername1">
+					<input id="Spieler1" type="text" name="Name" placeholder="Spielername" value="" required/>
+				</fieldset>
+				<fieldset id="Spielername2" style="opacity: 0.33">
+					<input id="Spieler2" type="text" name="Name"  placeholder="Spielername" value=""/>
+				</fieldset>
+				<fieldset id="Spielername3" style="opacity: 0.33">
+					<input id="Spieler3" type="text" name="Name" placeholder="Spielername" value=""/>
+				</fieldset>
+				<fieldset id="Spielername4" style="opacity: 0.33">
+					<input id="Spieler4" type="text" name="Name" placeholder="Spielername" value=""/>
+				</fieldset></fieldset>
 			
 			<!-- Zwischen drei unterschiedlichen Decks wählen -->
-			<fieldset id="Cards">
-			<h4>Kartensätze</h4>
-			<input type="radio" name="Radiogroup" value="letters" id="radio1" onclick="Aufgabe4.setCardDeck(this.value)"/>
-			<label for="radio1">Alphabet</label>
-			<input type="radio" name="Radiogroup" value="animals" id="radio2" onclick="Aufgabe4.setCardDeck(this.value)"/>
-			<label for="radio2">Tiere</label>
-			<input type="radio" name="Radiogroup" value="fruits" id="radio3" onclick="Aufgabe4.setCardDeck(this.value)"/>
-			<label for="radio3">Früchte</label>
-			</fieldset>
+				<fieldset id="Cards">
+					<h4>Kartensätze</h4>
+					<input type="radio" name="Radiogroup" value="letters" id="radio1" onclick="Aufgabe4.setCardDeck(this.value)"/>
+					<label for="radio1">Alphabet</label>
+					<input type="radio" name="Radiogroup" value="animals" id="radio2" onclick="Aufgabe4.setCardDeck(this.value)"/>
+					<label for="radio2">Tiere</label>
+					<input type="radio" name="Radiogroup" value="fruits" id="radio3" onclick="Aufgabe4.setCardDeck(this.value)"/>
+					<label for="radio3">Früchte</label>
+				</fieldset>
 			
 			<!-- Anzahl der Kartenpaare wählen -->
-		 	<fieldset id="numberOfPairs">
-		 	<h4>Anzahl der Kartenpaare</h4>
-			<input id="numberOfPairs_slider" type="range" name="Slider" min="5" max="26" step="1" value="5" oninput="Aufgabe4.numPairInput(this.value)"/>
-        	<label for="numberOfPairs" id="numberOfPairs_label">5</label>
-			</fieldset> 
+		 		<fieldset id="numberOfPairs">
+		 			<h4>Anzahl der Kartenpaare</h4>
+					<input id="numberOfPairs_slider" type="range" name="Slider" min="5" max="26" step="1" value="5" oninput="Aufgabe4.numPairInput(this.value)"/><!--  -->
+        			<label for="numberOfPairs_slider" id="numberOfPairs_label">5</label>
+				</fieldset> 
 			<!-- Startbutton -->
-			<fieldset id="playGame">
-			<button onclick="Aufgabe4.main()">play Memory</button>
-			</fieldset></fieldset>
-		</main>
-		<footer id="Spielerinfo">
-		</footer>
+				<fieldset id="playGame">
+					<button onclick="Aufgabe4.main()">play Memory</button>
+				</fieldset>
+				</fieldset>
+		<div id="Spielfeld"></div>
+		<div id="Spielerinfo"></div>	
+		
+		
 	</body>
 </html>

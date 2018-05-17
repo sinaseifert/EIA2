@@ -4,14 +4,42 @@
 
 /*Stylesheet Smartphone*/
 
-*{
-	margin: 0;
-	padding: 0;
+button {
+	margin:1em 0em;
 }
+
+ #Formular {
+	display: block;
+    background-color: Whitesmoke;
+    border: none;
+    padding: 2em;
+    width: 50%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+#Spieler {
+text-align: center;
+}
+
+#numbOfPlayer{
+text-align: center;
+}
+
+#Cards{
+text-align: center;
+}
+
+#numberOfPairs{
+text-align: center;
+}
+
+#playGame{
+text-align: center;
+} 
 /*allgemeine Attribute für den Body*/
 body{
-	font-family: ;
-	font-size: ;
+	background-color: Whitesmoke;
 }
 /*Überschrift*/
 h2 {
@@ -52,6 +80,7 @@ h2 {
 	position: relative;
 	font-family: 'Dancing Script' , cursive;	
 	font-size: 200%;
+	color: Whitesmoke;
 }
 
 
