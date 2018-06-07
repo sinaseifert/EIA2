@@ -41,22 +41,21 @@ namespace L04_Interfaces {
         let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
         let search: HTMLInputElement = <HTMLInputElement>document.getElementById("outputMatrikel");
         output.value = "";
-        // for-in-Schleife iteriert über die Schlüssel des assoziativen Arrays
-        //        for (let matrikel in studiHomoAssoc) {  // Besonderheit: Type-Annotation nicht erlaubt, ergibt sich aus der Interface-Definition
-        //            let studi: Studi = studiHomoAssoc[matrikel];
-        //            let line: string = matrikel + ": ";
-        //
-        //            if (search.value == studi.matrikel.toString()) {
-        //                line += studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
-        //                line += studi.gender ? "(M)" : "(F)" + ", ";
-        //                line += studi.courseOfStudies;
-        //                output.value += line + "\n";
-        //            } else {
-        //                let studi: string = "Keine passenden Informationen gefunden.";
-        //                output.value += studi + "\n";
-        //            }
-        //        }
-        sendRequestWithStudiData("searchStudent", matrikel);
+//                for (let matrikel in studiHomoAssoc) {  // Besonderheit: Type-Annotation nicht erlaubt, ergibt sich aus der Interface-Definition
+//                    let studi: Studi = studiHomoAssoc[matrikel];
+//                    let line: string = matrikel + ": ";
+//        
+//                    if (search.value == studi.matrikel.toString()) {
+//                        line += studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+//                        line += studi.gender ? "(M)" : "(F)" + ", ";
+//                        line += studi.courseOfStudies;
+//                        output.value += line + "\n";
+//                    } else {
+//                        let studi: string = "Keine passenden Informationen gefunden.";
+//                        output.value += studi + "\n";
+//                    }
+//                }
+        sendRequestWithStudiData("searchStudent", "" );
     }
 
     function studentsRefresh(): void {
@@ -113,7 +112,7 @@ namespace L04_Interfaces {
                 refresh();
             };
         }
-        else if (method == "searchStudent") {
+        else if (_method == "searchStudent") {
             xhr.onload = function(): void {
                 if (xhr.responseText == "undefined") {
                     alert("Keine passenden Informationen gefunden.");
@@ -122,10 +121,13 @@ namespace L04_Interfaces {
                 let student = JSON.parse(xhr.responseText);
                 let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
                 output.value = "";
+
+        let search: HTMLInputElement = <HTMLInputElement>document.getElementById("outputMatrikel");
+        output.value = "";
                 for (let matrikel in studiHomoAssoc) {  // Besonderheit: Type-Annotation nicht erlaubt, ergibt sich aus der Interface-Definition
                     let studi: Studi = studiHomoAssoc[matrikel];
                     let line: string = matrikel + ": ";
-
+        
                     if (search.value == studi.matrikel.toString()) {
                         line += studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
                         line += studi.gender ? "(M)" : "(F)" + ", ";
@@ -133,8 +135,11 @@ namespace L04_Interfaces {
                         output.value += line + "\n";
                     } else {
                         let studi: string = "Keine passenden Informationen gefunden.";
-                        //output.value += studi + "\n";
+                        output.value += studi + "\n";
                     }
                 }
                 xhr.send();
             }
+        }
+    }
+}
