@@ -1,8 +1,8 @@
 var L04_Interfaces;
 (function (L04_Interfaces) {
     window.addEventListener("load", init);
-    //    let address: string = "http://localhost:8100";
-    let address = "https://eia2node1.herokuapp.com/";
+    let address = "http://localhost:8100";
+    //    let address: string = "https://eia2node1.herokuapp.com/";
     function init() {
         console.log("Init");
         let insertButton = document.getElementById("insert");
@@ -42,20 +42,16 @@ var L04_Interfaces;
     function search() {
         let xhr = new XMLHttpRequest();
         let matrikel = document.getElementById("inputMatrikel");
-        let output = document.getElementsByTagName("textarea")[0];
         xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
         xhr.addEventListener("readystatechange", changedSearch);
-        output.value = matrikel.value + ": ";
-        output.value += xhr.responseText;
         xhr.send();
     }
     function changedSearch(_event) {
+        let output = document.getElementsByTagName("textarea")[0];
         let xhr = _event.target;
-        //        if (xhr.readyState == XMLHttpRequest.DONE) {
-        if (this.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log("searchRequest finished");
-            }
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            output.value += xhr.responseText;
+            console.log(xhr.responseText);
         }
     }
     function refresh() {

@@ -1,8 +1,8 @@
 namespace L04_Interfaces {
     window.addEventListener("load", init);
 
-//    let address: string = "http://localhost:8100";
-    let address: string = "https://eia2node1.herokuapp.com/";
+    let address: string = "http://localhost:8100";
+    //    let address: string = "https://eia2node1.herokuapp.com/";
 
     function init(): void {
         console.log("Init");
@@ -48,21 +48,17 @@ namespace L04_Interfaces {
     function search(): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         let matrikel: HTMLInputElement = <HTMLInputElement>document.getElementById("inputMatrikel");
-        let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
         xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
         xhr.addEventListener("readystatechange", changedSearch);
-        output.value = matrikel.value + ": ";
-        output.value += xhr.responseText;
         xhr.send();
     }
 
     function changedSearch(_event: ProgressEvent): void {
+        let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
         let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
-//        if (xhr.readyState == XMLHttpRequest.DONE) {
-        if (this.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log("searchRequest finished");
-            }
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            output.value += xhr.responseText;
+            console.log(xhr.responseText);
         }
     }
 
