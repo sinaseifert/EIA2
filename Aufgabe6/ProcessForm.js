@@ -30,7 +30,7 @@ var L04_Interfaces;
         let dataString = JSON.stringify(studi);
         let xhr = new XMLHttpRequest();
         xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
-        xhr.addEventListener("readyStateChange", changedInsert);
+        xhr.addEventListener("readystatechange", changedInsert);
         xhr.send();
     }
     function changedInsert(_event) {
@@ -44,7 +44,7 @@ var L04_Interfaces;
         let matrikel = document.getElementById("inputMatrikel");
         let output = document.getElementsByTagName("textarea")[0];
         xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
-        xhr.addEventListener("readyStateChange", changedSearch);
+        xhr.addEventListener("readystatechange", changedSearch);
         output.value = matrikel.value + ": ";
         output.value += xhr.responseText;
         xhr.send();
@@ -61,7 +61,7 @@ var L04_Interfaces;
     function refresh() {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", address + "?command=studentsRefresh", true);
-        xhr.addEventListener("readyStateChange", changedRefresh);
+        xhr.addEventListener("readystatechange", changedRefresh);
         xhr.send();
     }
     function changedRefresh(_event) {
@@ -85,7 +85,7 @@ var L04_Interfaces;
             let dataString = JSON.stringify(student);
             let xhr = new XMLHttpRequest();
             xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
-            xhr.addEventListener("readyStateChange", changedInsert);
+            xhr.addEventListener("readystatechange", changedInsert);
             xhr.send();
         }
     }

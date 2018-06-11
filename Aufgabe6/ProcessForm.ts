@@ -34,7 +34,7 @@ namespace L04_Interfaces {
         let dataString: string = JSON.stringify(studi);
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
-        xhr.addEventListener("readyStateChange", changedInsert);
+        xhr.addEventListener("readystatechange", changedInsert);
         xhr.send();
     }
 
@@ -50,7 +50,7 @@ namespace L04_Interfaces {
         let matrikel: HTMLInputElement = <HTMLInputElement>document.getElementById("inputMatrikel");
         let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
         xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
-        xhr.addEventListener("readyStateChange", changedSearch);
+        xhr.addEventListener("readystatechange", changedSearch);
         output.value = matrikel.value + ": ";
         output.value += xhr.responseText;
         xhr.send();
@@ -69,7 +69,7 @@ namespace L04_Interfaces {
     function refresh(): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.open("GET", address + "?command=studentsRefresh", true);
-        xhr.addEventListener("readyStateChange", changedRefresh);
+        xhr.addEventListener("readystatechange", changedRefresh);
         xhr.send();
     }
 
@@ -95,7 +95,7 @@ namespace L04_Interfaces {
             let dataString: string = JSON.stringify(student);
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
-            xhr.addEventListener("readyStateChange", changedInsert);
+            xhr.addEventListener("readystatechange", changedInsert);
             xhr.send();
         }
     }
