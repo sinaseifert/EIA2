@@ -1,8 +1,8 @@
 namespace L04_Interfaces {
     window.addEventListener("load", init);
 
-    let address: string = "http://localhost:8100";
-//    let address: string = "https://eia2node1.herokuapp.com/";
+//    let address: string = "http://localhost:8100";
+    let address: string = "https://eia2node1.herokuapp.com/";
 
     function init(): void {
         console.log("Init");
