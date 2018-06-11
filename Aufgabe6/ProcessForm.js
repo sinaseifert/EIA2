@@ -1,14 +1,13 @@
 var L04_Interfaces;
 (function (L04_Interfaces) {
     window.addEventListener("load", init);
-    //    let address: string = "http://localhost:8100";
-    let address = "https://eia2node1.herokuapp.com/";
-    let inputs = document.getElementsByTagName("input");
+    let address = "http://localhost:8100";
+    //    let address: string = "https://eia2node1.herokuapp.com/";
     function init() {
         console.log("Init");
         let insertButton = document.getElementById("insert");
         let refreshButton = document.getElementById("refresh");
-        let searchButton = document.getElementById("search");
+        let searchButton = document.getElementById("searchButton");
         let submitButton = document.getElementById("submit");
         insertButton.addEventListener("click", insert);
         refreshButton.addEventListener("click", refresh);
@@ -30,43 +29,47 @@ var L04_Interfaces;
         };
         let dataString = JSON.stringify(studi);
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=insert&matrikel=" + encodeURIComponent(dataString), true);
+        xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
         xhr.addEventListener("readyStateChange", changedInsert);
         xhr.send();
     }
     function changedInsert(_event) {
-        var xhr = _event.target;
+        let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            alert(xhr.response);
+            alert(xhr.responseText);
         }
     }
     function search() {
-        let matrikel = inputs[2].value;
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=search&searchStudent=" + encodeURIComponent(matrikel), true);
+        let matrikel = document.getElementById("inputMatrikel");
+        let output = document.getElementsByTagName("textarea")[0];
+        xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
         xhr.addEventListener("readyStateChange", changedSearch);
+        output.value = matrikel.value + ": ";
+        output.value += xhr.responseText;
         xhr.send();
     }
     function changedSearch(_event) {
-        let output = document.getElementsByTagName("textarea")[0];
-        output.value = "";
-        var xhr = _event.target;
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            output.value += xhr.response;
+        let xhr = _event.target;
+        //        if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (this.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("searchRequest finished");
+            }
         }
     }
     function refresh() {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=refresh", true);
+        xhr.open("GET", address + "?command=studentsRefresh", true);
         xhr.addEventListener("readyStateChange", changedRefresh);
         xhr.send();
     }
     function changedRefresh(_event) {
         let output = document.getElementsByTagName("textarea")[1];
         output.value = "";
-        var xhr = _event.target;
+        let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            output.value += xhr.response;
+            output.value += xhr.responseText;
         }
     }
     function submit() {
@@ -79,6 +82,11 @@ var L04_Interfaces;
                 courseOfStudies: "MKB",
                 gender: !!Math.round(Math.random())
             };
+            let dataString = JSON.stringify(student);
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
+            xhr.addEventListener("readyStateChange", changedInsert);
+            xhr.send();
         }
     }
 })(L04_Interfaces || (L04_Interfaces = {}));

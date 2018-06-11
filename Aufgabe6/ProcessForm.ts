@@ -1,17 +1,16 @@
 namespace L04_Interfaces {
     window.addEventListener("load", init);
 
-    //    let address: string = "http://localhost:8100";
-    let address: string = "https://eia2node1.herokuapp.com/";
-    let inputs: NodeListOf<HTMLInputElement> = document.getElementsByTagName("input");
+    let address: string = "http://localhost:8100";
+//    let address: string = "https://eia2node1.herokuapp.com/";
 
     function init(): void {
         console.log("Init");
         let insertButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("insert");
         let refreshButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("refresh");
-        let searchButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("search");
+        let searchButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("searchButton");
         let submitButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("submit");
-        
+
         insertButton.addEventListener("click", insert);
         refreshButton.addEventListener("click", refresh);
         searchButton.addEventListener("click", search);
@@ -34,54 +33,58 @@ namespace L04_Interfaces {
 
         let dataString: string = JSON.stringify(studi);
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=insert&matrikel=" + encodeURIComponent(dataString), true);
+        xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
         xhr.addEventListener("readyStateChange", changedInsert);
         xhr.send();
     }
-    
+
     function changedInsert(_event: ProgressEvent): void {
-        var xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
+        let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            alert(xhr.response);
+            alert(xhr.responseText);
         }
-    }    
+    }
 
     function search(): void {
-        let matrikel: string = inputs[2].value;
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=search&searchStudent=" + encodeURIComponent(matrikel), true);
-        xhr.addEventListener("readyStateChange", changedSearch);
-        xhr.send();
-    } 
-    
-    function changedSearch(_event: ProgressEvent): void {
+        let matrikel: HTMLInputElement = <HTMLInputElement>document.getElementById("inputMatrikel");
         let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
-        output.value = "";
-        var xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            output.value += xhr.response;
-        }    
+        xhr.open("GET", address + "?command=searchStudent&data=" + matrikel.value, true);
+        xhr.addEventListener("readyStateChange", changedSearch);
+        output.value = matrikel.value + ": ";
+        output.value += xhr.responseText;
+        xhr.send();
     }
-                
+
+    function changedSearch(_event: ProgressEvent): void {
+        let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
+//        if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (this.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("searchRequest finished");
+            }
+        }
+    }
+
     function refresh(): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?method=refresh", true);
+        xhr.open("GET", address + "?command=studentsRefresh", true);
         xhr.addEventListener("readyStateChange", changedRefresh);
         xhr.send();
     }
-    
+
     function changedRefresh(_event: ProgressEvent): void {
         let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[1];
         output.value = "";
-        var xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
+        let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            output.value += xhr.response;
-        }    
+            output.value += xhr.responseText;
+        }
     }
-    
+
     function submit(): void {
         for (let i: number = 0; i < 3; i++) {
-            let student: L04_Interfaces.Studi = {
+            let student: Studi = {
                 name: "Nachname",
                 firstname: "Vorname",
                 matrikel: Math.floor(Math.random() * 111111),
@@ -89,6 +92,13 @@ namespace L04_Interfaces {
                 courseOfStudies: "MKB",
                 gender: !!Math.round(Math.random())
             };
+            let dataString: string = JSON.stringify(student);
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.open("GET", address + "?command=addStudent&data=" + encodeURIComponent(dataString), true);
+            xhr.addEventListener("readyStateChange", changedInsert);
+            xhr.send();
         }
     }
+
+
 }        
