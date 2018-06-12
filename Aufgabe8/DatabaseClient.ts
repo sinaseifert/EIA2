@@ -25,6 +25,7 @@ namespace DatabaseClient {
         query += "&courseOfStudies=" + inputs[5].value;
         console.log(query);
         sendRequest(query, handleInsertResponse);
+           
     }
 
     function refresh(_event: Event): void {
