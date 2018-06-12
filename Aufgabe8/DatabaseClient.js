@@ -38,7 +38,7 @@ var DatabaseClient;
     }
     function sendRequest(_query, _callback) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8100?" + _query, true);
+        xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
         xhr.addEventListener("readystatechange", _callback);
         xhr.send();
