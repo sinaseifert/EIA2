@@ -36,7 +36,7 @@ var DatabaseClient;
         let xhr = new XMLHttpRequest();
         xhr.open("GET", address + "?command=refresh", true); //https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
-        xhr.addEventListener("readystatechange", _callback);
+        xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();
     }
     function handleInsertResponse(_event) {
@@ -50,8 +50,6 @@ var DatabaseClient;
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let output = document.getElementsByTagName("textarea")[0];
             output.value = xhr.response;
-            let responseAsJson = JSON.parse(xhr.response);
-            console.log(responseAsJson);
         }
     }
 })(DatabaseClient || (DatabaseClient = {}));

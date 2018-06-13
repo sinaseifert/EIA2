@@ -42,7 +42,7 @@ namespace DatabaseClient {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.open("GET", address + "?command=refresh", true); //https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
-        xhr.addEventListener("readystatechange", _callback);
+        xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();
     }
 
@@ -58,8 +58,8 @@ namespace DatabaseClient {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
             output.value = xhr.response;
-            let responseAsJson: JSON = JSON.parse(xhr.response);
-            console.log(responseAsJson);
+//            let responseAsJson: JSON = JSON.parse(xhr.response);
+//            console.log(responseAsJson);
         }
     }
 }
