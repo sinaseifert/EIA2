@@ -20,7 +20,7 @@ var DatabaseClient;
         query += "&matrikel=" + inputs[2].value;
         query += "&age=" + inputs[3].value;
         query += "&gender=" + genderButton.checked;
-        query += "&courseOfStudies=" + inputs[5].value;
+        query += "&courseOfStudies=" + inputs[6].value;
         console.log(query);
         sendRequest(query, handleInsertResponse);
     }
