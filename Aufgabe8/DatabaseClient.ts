@@ -32,7 +32,7 @@ namespace DatabaseClient {
         let stringifyJSON: string = JSON.stringify(student);
         console.log(stringifyJSON);
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=insert&data=" + stringifyJSON, true);
+        xhr.open("GET", address + "?command=insert" + stringifyJSON, true);
         xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();
 

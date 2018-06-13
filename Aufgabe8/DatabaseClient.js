@@ -29,7 +29,7 @@ var DatabaseClient;
         let stringifyJSON = JSON.stringify(student);
         console.log(stringifyJSON);
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=insert&data=" + stringifyJSON, true);
+        xhr.open("GET", address + "?command=insert" + stringifyJSON, true);
         xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();
         //        query += "&name=" + inputs[0].value;
