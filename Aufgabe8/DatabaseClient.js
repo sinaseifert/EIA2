@@ -14,32 +14,33 @@ var DatabaseClient;
     }
     function insert(_event) {
         let genderButton = document.getElementById("male");
-        let matrikel = inputs[2].value;
-        let courseOfStudies = inputs[6].value;
-        let student;
-        //        let tempCourseOfStudies: HTMLInputElement = <HTMLInputElement>document.getElementById("options");
-        student = {
-            name: inputs[0].value,
-            firstname: inputs[1].value,
-            matrikel: parseInt(matrikel),
-            age: parseInt(inputs[3].value),
-            gender: genderButton.checked,
-            courseOfStudies: inputs[6].value
-        };
-        let stringifyJSON = JSON.stringify(student);
-        console.log(stringifyJSON);
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=insert&student" + stringifyJSON, true);
-        xhr.addEventListener("readystatechange", handleInsertResponse);
-        xhr.send();
-        //        query += "&name=" + inputs[0].value;
-        //        query += "&firstname=" + inputs[1].value;
-        //        query += "&matrikel=" + inputs[2].value;
-        //        query += "&age=" + inputs[3].value;
-        //        query += "&gender=" + genderButton.checked;
-        //        query += "&courseOfStudies=" + inputs[6].value;
-        //        console.log(query);
-        //        sendRequest(student, handleInsertResponse);
+        let query = "command=insert";
+        //        let matrikel: string = inputs[2].value;
+        //        let courseOfStudies = inputs[6].value;
+        //        let student: StudentData;
+        //        //        let tempCourseOfStudies: HTMLInputElement = <HTMLInputElement>document.getElementById("options");
+        //        student = {
+        //            name: inputs[0].value,
+        //            firstname: inputs[1].value,
+        //            matrikel: parseInt(matrikel),
+        //            age: parseInt(inputs[3].value),
+        //            gender: genderButton.checked,
+        //            courseOfStudies: inputs[6].value
+        //        };
+        //        let stringifyJSON: string = JSON.stringify(student);
+        //        console.log(stringifyJSON);
+        //        let xhr: XMLHttpRequest = new XMLHttpRequest();
+        //        xhr.open("GET", address + "?command=insert&student" + stringifyJSON, true);
+        //        xhr.addEventListener("readystatechange", handleInsertResponse);
+        //        xhr.send();
+        query += "&name=" + inputs[0].value;
+        query += "&firstname=" + inputs[1].value;
+        query += "&matrikel=" + inputs[2].value;
+        query += "&age=" + inputs[3].value;
+        query += "&gender=" + genderButton.checked;
+        query += "&courseOfStudies=" + inputs[6].value;
+        console.log(query);
+        sendRequest(query, handleInsertResponse);
     }
     function handleInsertResponse(_event) {
         let xhr = _event.target;
@@ -68,13 +69,13 @@ var DatabaseClient;
         xhr.addEventListener("readystatechange", handleFindResponse);
         xhr.send();
     }
-    //    function sendRequest(_query: string, _callback: EventListener): void {
-    //        let xhr: XMLHttpRequest = new XMLHttpRequest();
-    //        xhr.open("GET", address + "?command=insert", true); //https://eia2node1.herokuapp.com/?" + _query, true);
-    //        //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
-    //        xhr.addEventListener("readystatechange", handleInsertResponse);
-    //        xhr.send();
-    //    }
+    function sendRequest(_query, _callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", address + "?command=insert", true); //https://eia2node1.herokuapp.com/?" + _query, true);
+        //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
+        xhr.addEventListener("readystatechange", handleInsertResponse);
+        xhr.send();
+    }
     function handleFindResponse(_event) {
         let output = document.getElementsByTagName("textarea")[1];
         output.value = "";
