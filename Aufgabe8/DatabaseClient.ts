@@ -45,7 +45,7 @@ namespace DatabaseClient {
         
     function sendRequest(_query: string, _callback: EventListener): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
+        xhr.open("GET", address + "?command=refresh", true); //https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
         xhr.addEventListener("readystatechange", _callback);
         xhr.send();
