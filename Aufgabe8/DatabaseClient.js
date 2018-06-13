@@ -2,6 +2,7 @@ var DatabaseClient;
 (function (DatabaseClient) {
     window.addEventListener("load", init);
     let address = "https://eia2node1.herokuapp.com/";
+    let inputs = document.getElementsByTagName("input");
     function init(_event) {
         console.log("Init");
         let insertButton = document.getElementById("insert");
@@ -12,7 +13,6 @@ var DatabaseClient;
         findButton.addEventListener("click", find);
     }
     function insert(_event) {
-        let inputs = document.getElementsByTagName("input");
         let genderButton = document.getElementById("male");
         let query = "command=insert";
         query += "&name=" + inputs[0].value;
@@ -25,12 +25,17 @@ var DatabaseClient;
         sendRequest(query, handleInsertResponse);
     }
     function refresh(_event) {
-        let query = "command=refresh";
-        sendRequest(query, handleFindResponse);
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", address + "?command=refresh=", true);
+        xhr.addEventListener("readystatechange", handleRefreshResponse);
+        xhr.send();
     }
     function find(_event) {
-        let query = "command=find";
-        sendRequest(query, handleFindResponse);
+        let matrikel = inputs[3].value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", address + "?command=find=" + matrikel, true);
+        xhr.addEventListener("readystatechange", handleFindResponse);
+        xhr.send();
     }
     function sendRequest(_query, _callback) {
         let xhr = new XMLHttpRequest();
@@ -45,8 +50,16 @@ var DatabaseClient;
             alert(xhr.response);
         }
     }
-    function handleFindResponse(_event) {
+    function handleRefreshResponse(_event) {
         let output = document.getElementsByTagName("textarea")[0];
+        output.value = "";
+        let xhr = _event.target;
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            output.value += xhr.response;
+        }
+    }
+    function handleFindResponse(_event) {
+        let output = document.getElementsByTagName("textarea")[1];
         output.value = "";
         let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
