@@ -36,7 +36,6 @@ namespace DatabaseClient {
         //        xhr.open("GET", address + "?command=insert&student" + stringifyJSON, true);
         //        xhr.addEventListener("readystatechange", handleInsertResponse);
         //        xhr.send();
-
         query += "&name=" + inputs[0].value;
         query += "&firstname=" + inputs[1].value;
         query += "&matrikel=" + inputs[2].value;
@@ -81,7 +80,7 @@ namespace DatabaseClient {
 
     function sendRequest(_query: string, _callback: EventListener): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=insert", true); //https://eia2node1.herokuapp.com/?" + _query, true);
+        xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
         xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();

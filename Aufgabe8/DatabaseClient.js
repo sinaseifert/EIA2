@@ -71,7 +71,7 @@ var DatabaseClient;
     }
     function sendRequest(_query, _callback) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=insert", true); //https://eia2node1.herokuapp.com/?" + _query, true);
+        xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
         //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
         xhr.addEventListener("readystatechange", handleInsertResponse);
         xhr.send();
