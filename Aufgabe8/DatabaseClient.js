@@ -46,9 +46,10 @@ var DatabaseClient;
         }
     }
     function handleFindResponse(_event) {
+        let output = document.getElementsByTagName("textarea")[0];
+        output.value = "";
         let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            let output = document.getElementsByTagName("textarea")[0];
             output.value = xhr.response;
         }
     }
