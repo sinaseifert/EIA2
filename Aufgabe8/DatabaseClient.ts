@@ -55,10 +55,7 @@ namespace DatabaseClient {
     }
 
     function refresh(_event: Event): void {
-        let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=refresh", true);
-        xhr.addEventListener("readystatechange", handleRefreshResponse);
-        xhr.send();
+        sendRequest("command=refresh", handleRefreshResponse)
     }
 
     function handleRefreshResponse(_event: ProgressEvent): void {
@@ -71,31 +68,34 @@ namespace DatabaseClient {
     }
 
     function find(_event: Event): void {
-        let matrikel: string = inputs[2].value;
-        let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=find" + matrikel, true);
-        xhr.addEventListener("readystatechange", handleFindResponse);
-        xhr.send();
+        let matrikel: string = inputs[7].value;
+        if (matrikel == "")
+            matrikel = "0";
+        sendRequest("command=find&matrikel=" + matrikel, handleFindResponse)
     }
 
     function sendRequest(_query: string, _callback: EventListener): void {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
-        //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
-        xhr.addEventListener("readystatechange", handleInsertResponse);
+        xhr.addEventListener("readystatechange", _callback);
         xhr.send();
     }
 
     function handleFindResponse(_event: ProgressEvent): void {
-        let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[1];
+        let output: HTMLTextAreaElement = <HTMLTextAreaElement>document.getElementById("outputFind");
         output.value = "";
         let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
         if (xhr.readyState == XMLHttpRequest.DONE) {
 
-            output.value = xhr.response;
+            output.value = buildResponseString(JSON.parse(xhr.response));
             //            let responseAsJson: JSON = JSON.parse(xhr.response);
             //            console.log(responseAsJson);
         }
+    }
+
+    function buildResponseString(student: StudentData): string {
+        let geschlecht = student.gender ? "Männlich" : "Weiblich";
+        return student.matrikel + ": " + student.name + ", " + student.firstname + ", Alter: " + student.age + ", Studiengang: " + student.courseOfStudies + ", Geschlecht: " + geschlecht;
     }
 
 }

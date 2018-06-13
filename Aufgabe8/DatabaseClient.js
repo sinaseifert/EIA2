@@ -49,10 +49,7 @@ var DatabaseClient;
         }
     }
     function refresh(_event) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=refresh", true);
-        xhr.addEventListener("readystatechange", handleRefreshResponse);
-        xhr.send();
+        sendRequest("command=refresh", handleRefreshResponse);
     }
     function handleRefreshResponse(_event) {
         let output = document.getElementsByTagName("textarea")[0];
@@ -63,26 +60,28 @@ var DatabaseClient;
         }
     }
     function find(_event) {
-        let matrikel = inputs[2].value;
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", address + "?command=find" + matrikel, true);
-        xhr.addEventListener("readystatechange", handleFindResponse);
-        xhr.send();
+        let matrikel = inputs[7].value;
+        if (matrikel == "")
+            matrikel = "0";
+        sendRequest("command=find&matrikel=" + matrikel, handleFindResponse);
     }
     function sendRequest(_query, _callback) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", "https://eia2node1.herokuapp.com/?" + _query, true);
-        //xhr.open("GET", "https://eia2-w17-databasetest.herokuapp.com/?" + _query, true);
-        xhr.addEventListener("readystatechange", handleInsertResponse);
+        xhr.addEventListener("readystatechange", _callback);
         xhr.send();
     }
     function handleFindResponse(_event) {
-        let output = document.getElementsByTagName("textarea")[1];
+        let output = document.getElementById("outputFind");
         output.value = "";
         let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            output.value = xhr.response;
+            output.value = buildResponseString(JSON.parse(xhr.response));
         }
+    }
+    function buildResponseString(student) {
+        let geschlecht = student.gender ? "M�nnlich" : "Weiblich";
+        return student.matrikel + ": " + student.name + ", " + student.firstname + ", Alter: " + student.age + ", Studiengang: " + student.courseOfStudies + ", Geschlecht: " + geschlecht;
     }
 })(DatabaseClient || (DatabaseClient = {}));
 //# sourceMappingURL=DatabaseClient.js.map
