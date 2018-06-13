@@ -32,12 +32,7 @@ namespace DatabaseClient {
         let query: string = "command=refresh";
         sendRequest(query, handleFindResponse);
     }
-
-    function findAll(_event: Event): void {
-        let query: string = "command=findAll";
-        sendRequest(query, handleFindResponse);
-    }
-    
+  
      function find(_event: Event): void {
         let query: string = "command=find";
         sendRequest(query, handleFindResponse);

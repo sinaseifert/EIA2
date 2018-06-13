@@ -28,10 +28,6 @@ var DatabaseClient;
         let query = "command=refresh";
         sendRequest(query, handleFindResponse);
     }
-    function findAll(_event) {
-        let query = "command=findAll";
-        sendRequest(query, handleFindResponse);
-    }
     function find(_event) {
         let query = "command=find";
         sendRequest(query, handleFindResponse);
