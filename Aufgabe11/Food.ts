@@ -8,7 +8,7 @@ namespace Inheritance {
         setRandomPosition(): void {
             this.x = Math.random() * crc2.canvas.width;
             this.y = 0;
-            this.radius = Math.random() * 10;
+            this.radius = Math.random() * 15;
         }
 
         move(): void {
@@ -18,7 +18,7 @@ namespace Inheritance {
                 this.y += 2;
             }
             else if (this.y >= 700) {
-                this.y = 0;
+                this.y += 0;
             }
         }
         

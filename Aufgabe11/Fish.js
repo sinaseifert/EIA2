@@ -21,23 +21,26 @@ var Inheritance;
         }
         //Methode move
         move() {
-            //            this.x += Math.random() * 4;
-            //            this.y += Math.random() * 4;
+            this.x += 4;
+            if (this.x >= 1050) {
+                this.x = -40;
+            }
+            this.y += 2;
         }
         //Methode draw
         draw() {
             Inheritance.crc2.beginPath();
             Inheritance.crc2.fillStyle = "rgb(" + this.r + "," + this.g + "," + this.b + ")";
-            Inheritance.ctx.moveTo(this.x, this.y);
-            Inheritance.ctx.bezierCurveTo(this.x + 30, this.y, this.x + 30, this.y + 20, this.x, this.y + 20);
+            Inheritance.crc2.moveTo(this.x, this.y);
+            Inheritance.crc2.bezierCurveTo(this.x + 30, this.y, this.x + 30, this.y + 20, this.x, this.y + 20);
             Inheritance.crc2.moveTo(this.x, this.y + 20);
             Inheritance.crc2.lineTo(this.x - 20, this.y + 10);
             Inheritance.crc2.lineTo(this.x - 25, this.y + 15);
             Inheritance.crc2.lineTo(this.x - 25, this.y);
             Inheritance.crc2.lineTo(this.x - 20, this.y + 5);
             Inheritance.crc2.lineTo(this.x, this.y);
-            Inheritance.ctx.stroke();
-            Inheritance.ctx.fill();
+            Inheritance.crc2.stroke();
+            Inheritance.crc2.fill();
             Inheritance.crc2.closePath();
         }
     }

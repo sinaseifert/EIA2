@@ -1,24 +1,27 @@
 var Inheritance;
 (function (Inheritance) {
     window.addEventListener("load", init);
-    //    let ctx: CanvasRenderingContext2D;
+    //export let ctx: CanvasRenderingContext2D;
     let movingObjects = [];
-    let n;
+    let n = 100;
+    let m = 7;
     let imgData;
     function init(_event) {
         let canvas = document.getElementsByTagName("canvas")[0];
         Inheritance.crc2 = canvas.getContext("2d");
-        Inheritance.ctx = canvas.getContext("2d");
+        //ctx = canvas.getContext("2d");
         console.log(Inheritance.crc2);
         canvas.addEventListener("click", insertNewObject);
         let background = new Inheritance.Background;
         background.draw();
-        imgData = Inheritance.crc2.getImageData(0, 0, Inheritance.crc2.canvas.height, Inheritance.crc2.canvas.width);
+        imgData = Inheritance.crc2.getImageData(0, 0, Inheritance.crc2.canvas.width, Inheritance.crc2.canvas.height);
         for (let i = 0; i < n; i++) {
             let fishis = new Inheritance.Fish("#00FFFF");
             movingObjects.push(fishis);
             let bubbles = new Inheritance.Bubble("#BFEFFF");
             movingObjects.push(bubbles);
+        }
+        for (let i = 0; i < m; i++) {
             let seagrasses = new Inheritance.Seagrass("#54FF9F");
             movingObjects.push(seagrasses);
         }
@@ -49,7 +52,6 @@ var Inheritance;
         }
     }
     function drawObjects() {
-        //Hintergrund
         for (let i = 0; i < movingObjects.length; i++) {
             movingObjects[i].draw();
         }

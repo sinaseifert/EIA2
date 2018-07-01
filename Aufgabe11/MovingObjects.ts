@@ -14,19 +14,11 @@ namespace Inheritance {
             this.setRandomPosition();
             this.color = _color;
         }
-        setRandomPosition(): void {
-            /*this.x = Math.random() * crc2.canvas.width;
-            this.y = Math.random() * crc2.canvas.height;
-            this.r = Math.random() * 255;
-            this.g = Math.random() * 255;
-            this.b = Math.random() * 255;*/
-        }
+        setRandomPosition(): void {}
 
-        move(): void {
-        }
+        move(): void {}
         
-        draw(): void {
-        }
+        draw(): void {}
 
 
     }

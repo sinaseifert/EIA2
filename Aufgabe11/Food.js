@@ -1,13 +1,13 @@
 var Inheritance;
 (function (Inheritance) {
-    class Food extends Inheritance.Fish {
+    class Food extends Inheritance.MovingObject {
         constructor(_color) {
             super(_color);
         }
         setRandomPosition() {
             this.x = Math.random() * Inheritance.crc2.canvas.width;
             this.y = 0;
-            this.radius = Math.random() * 10;
+            this.radius = Math.random() * 15;
         }
         move() {
             this.x += 0;
@@ -15,7 +15,7 @@ var Inheritance;
                 this.y += 2;
             }
             else if (this.y >= 700) {
-                this.y = 0;
+                this.y += 0;
             }
         }
         draw() {
