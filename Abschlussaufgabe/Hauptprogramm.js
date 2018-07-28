@@ -18,7 +18,7 @@ var Abschlussarbeit;
         //        canvas.addEventListener("click", insertNewObject);
         document.addEventListener("keydown", movePackman);
         document.addEventListener("touchmove", touchToMovePackman);
-        document.addEventListener("resize", resize);
+        //        document.addEventListener("resize", resize);
         let background = new Abschlussarbeit.Background;
         background.draw();
         imgData = Abschlussarbeit.crc2.getImageData(0, 0, Abschlussarbeit.crc2.canvas.width, Abschlussarbeit.crc2.canvas.height);
@@ -67,7 +67,7 @@ var Abschlussarbeit;
                     movingObjects.splice(i, 1);
                     score = score + 10;
                     if (score > 150) {
-                        alert("Glückwunsch!");
+                        alert("Glückwunsch! Du hast gewonnen :)");
                         score = 0;
                     }
                 }

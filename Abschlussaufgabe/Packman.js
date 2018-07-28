@@ -5,14 +5,16 @@ var Abschlussarbeit;
             super(...args);
             this.packmanWidth = 25;
             this.packmanHeight = 25;
-            this.huntspeed = 0.1;
+            //        private huntspeed: number = 0.1;
             this.x = 0;
             this.y = 0;
         }
         moveTouch(_x, _y) {
             // hunt
-            this.x += this.huntspeed * (_x - this.x);
-            this.y += this.huntspeed * (_y - this.y);
+            //            this.x += this.huntspeed * (_x - this.x);
+            //            this.y += this.huntspeed * (_y - this.y);
+            this.x = _x;
+            this.y = _y;
         }
         moveRight() {
             if (this.x + this.packmanWidth < Abschlussarbeit.crc2.canvas.width) {

@@ -2,14 +2,16 @@ namespace Abschlussarbeit {
     export class Packman extends MovingObject {
         packmanWidth: number = 25;
         packmanHeight: number = 25;
-        private huntspeed: number = 0.1;
+//        private huntspeed: number = 0.1;
         x: number = 0;
         y: number = 0;
 
         moveTouch(_x: number, _y: number): void {
             // hunt
-            this.x += this.huntspeed * (_x - this.x);
-            this.y += this.huntspeed * (_y - this.y);
+//            this.x += this.huntspeed * (_x - this.x);
+//            this.y += this.huntspeed * (_y - this.y);
+            this.x = _x;
+            this.y = _y;
         }
 
         moveRight(): void {
