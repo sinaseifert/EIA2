@@ -18,10 +18,12 @@ namespace Abschlussarbeit {
         let canvas: HTMLCanvasElement = document.getElementsByTagName("canvas")[0];
         crc2 = canvas.getContext("2d");
         console.log(crc2);
-        //        canvas.addEventListener("click", insertNewObject);
-        document.addEventListener("keydown", movePackman);
+        document.addEventListener("keydown", movePackman); 
+        document.addEventListener("touchstart", touchToMovePackman);
         document.addEventListener("touchmove", touchToMovePackman);
-        document.addEventListener("resize", resize);
+        document.addEventListener("touchend", touchToMovePackman);
+        _event.preventDefault();
+//        document.addEventListener("resize", resize);
 
         let background: Background = new Background;
         background.draw();
@@ -77,7 +79,7 @@ namespace Abschlussarbeit {
                     movingObjects.splice(i, 1);
                     score = score + 10;
                     if (score > 150) {
-                        alert("Glückwunsch!");
+                        alert("Glückwunsch! Du hast gewonnen :)");
                         score = 0;
                     }
                 }
