@@ -6,12 +6,12 @@ namespace Abschlussarbeit {
         x: number = 0;
         y: number = 0;
 
-        moveTouch(_x: number, _y: number): void {
+        moveTouch(_a: number, _b: number): void {
             // hunt
-//            this.x += this.huntspeed * (_x - this.x);
-//            this.y += this.huntspeed * (_y - this.y);
-            this.x = _x;
-            this.y = _y;
+//            this.x += this.huntspeed * (_a - this.x);
+//            this.y += this.huntspeed * (_b - this.y);
+            this.x = _a;
+            this.y = _b;
         }
 
         moveRight(): void {
