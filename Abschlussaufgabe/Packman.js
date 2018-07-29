@@ -51,7 +51,7 @@ var Abschlussarbeit;
             Abschlussarbeit.crc2.fillStyle = "#000000";
             Abschlussarbeit.crc2.fill();
         }
-        checkIfInside(_x, _y) {
+        inside(_x, _y) {
             if (_x > this.x && _x < (this.x + this.packmanWidth) && _y > this.y && _y < (this.y + this.packmanHeight)) {
                 return true;
             }

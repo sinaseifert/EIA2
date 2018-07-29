@@ -65,13 +65,13 @@ namespace Abschlussarbeit {
         drawObjects();
         popBubbles();
         popPoisonBubbles();
-        checkBubblePosition();
+        checkBubbleStatus();
     }
 
-    function checkBubblePosition(): void {
+    function checkBubbleStatus(): void {
         for (let i: number = 0; i < movingObjects.length; i++) {
             let bubbles: Bubble = movingObjects[i];
-            let inside: boolean = packman.checkIfInside(bubbles.x, bubbles.y);
+            let inside: boolean = packman.inside(bubbles.x, bubbles.y);
 
             if (inside) {
                 if (bubbles.color == "##00BFFF") {

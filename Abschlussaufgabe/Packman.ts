@@ -57,7 +57,7 @@ namespace Abschlussarbeit {
             crc2.fill();
         }
 
-        checkIfInside(_x: number, _y: number): boolean {
+        inside(_x: number, _y: number): boolean {
             if (_x > this.x && _x < (this.x + this.packmanWidth) && _y > this.y && _y < (this.y + this.packmanHeight)) {
                 return true;
             }

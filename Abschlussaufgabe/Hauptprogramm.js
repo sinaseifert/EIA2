@@ -57,12 +57,12 @@ var Abschlussarbeit;
         drawObjects();
         popBubbles();
         popPoisonBubbles();
-        checkBubblePosition();
+        checkBubbleStatus();
     }
-    function checkBubblePosition() {
+    function checkBubbleStatus() {
         for (let i = 0; i < movingObjects.length; i++) {
             let bubbles = movingObjects[i];
-            let inside = packman.checkIfInside(bubbles.x, bubbles.y);
+            let inside = packman.inside(bubbles.x, bubbles.y);
             if (inside) {
                 if (bubbles.color == "##00BFFF") {
                     movingObjects.splice(i, 1);
