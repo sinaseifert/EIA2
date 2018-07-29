@@ -20,7 +20,6 @@ var Abschlussarbeit;
         document.addEventListener("touchmove", touchToMovePackman);
         document.addEventListener("touchend", touchToMovePackman);
         _event.preventDefault();
-        //        document.addEventListener("resize", resize);
         let background = new Abschlussarbeit.Background;
         background.draw();
         imgData = Abschlussarbeit.crc2.getImageData(0, 0, Abschlussarbeit.crc2.canvas.width, Abschlussarbeit.crc2.canvas.height);

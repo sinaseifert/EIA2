@@ -10,7 +10,6 @@ var Abschlussarbeit;
             this.y = 0;
         }
         moveTouch(_a, _b) {
-            // hunt
             //            this.x += this.huntspeed * (_a - this.x);
             //            this.y += this.huntspeed * (_b - this.y);
             this.x = _a;

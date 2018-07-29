@@ -23,7 +23,6 @@ namespace Abschlussarbeit {
         document.addEventListener("touchmove", touchToMovePackman);
         document.addEventListener("touchend", touchToMovePackman);
         _event.preventDefault();
-//        document.addEventListener("resize", resize);
 
         let background: Background = new Background;
         background.draw();
